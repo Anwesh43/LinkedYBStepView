@@ -17,10 +17,10 @@ import android.util.Log
 
 val nodes : Int = 5
 val lines : Int = 4
-val STROKE_FACTOR : Int = 60
+val STROKE_FACTOR : Int = 130
 val color : Int = Color.parseColor("#616161")
 val BACK_COLOR : Int = Color.parseColor("#BDBDBD")
-val SIZE_FACTOR : Int = 3
+val SIZE_FACTOR : Float = 2.5f
 val scDiv : Double = 0.51
 val scGap : Float = 0.05f
 
@@ -41,18 +41,21 @@ fun Canvas.drawYBSNode(i : Int, scale : Float, paint : Paint) {
     val size : Float = gap / SIZE_FACTOR
     val sc1 : Float = scale.divideScale(0, 2)
     val sc2 : Float = scale.divideScale(1, 2)
+    val k1 : Float = 1.2f
+    val k2 : Float = 3.2f
     paint.strokeWidth = Math.min(w, h) / STROKE_FACTOR
     paint.strokeCap = Paint.Cap.ROUND
     save()
     translate(gap * (i + 1), h/2)
     paint.color = color
-    drawRect(RectF(-size / 2, -size / 4, size / 2, size / 4), paint)
+    drawRect(RectF(-size / k1, -size / k2, size / k1, size / k2), paint)
     save()
-    translate(size/2 + size/4, 0f)
+    translate(size/k1 + size/k2, 0f)
+    rotate(180f * sc2)
     val path : Path = Path()
-    path.moveTo(-size/4, -size/4)
-    path.lineTo(-size/4, size/4)
-    path.lineTo(size/4, 0f)
+    path.moveTo(-size/k2, -size/k2)
+    path.lineTo(-size/k2, size/k2)
+    path.lineTo(size/k2, 0f)
     drawPath(path, paint)
     restore()
     paint.color = BACK_COLOR
