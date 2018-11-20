@@ -224,4 +224,12 @@ class YBStepView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+        fun create(activity: Activity) : YBStepView {
+            val view : YBStepView = YBStepView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
