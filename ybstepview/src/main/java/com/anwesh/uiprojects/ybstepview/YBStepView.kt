@@ -33,6 +33,38 @@ fun Float.mirrorValue(a : Int, b : Int) : Float = (1 - getScaleFactor()) * a.get
 
 fun Float.updateScale(dir : Float, a : Int, b : Int) : Float = scGap * dir * mirrorValue(a, b)
 
+fun Canvas.drawYBSNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = w / (nodes + 1)
+    val size : Float = gap / SIZE_FACTOR
+    val sc1 : Float = scale.divideScale(0, 2)
+    val sc2 : Float = scale.divideScale(1, 2)
+    paint.strokeWidth = Math.min(w, h) / STROKE_FACTOR
+    paint.strokeCap = Paint.Cap.ROUND
+    save()
+    translate(gap * (i + 1), h/2)
+    paint.color = color
+    drawRect(RectF(-size / 2, -size / 4, size / 2, size / 4), paint)
+    save()
+    translate(size/2 + size/4, 0f)
+    val path : Path = Path()
+    path.moveTo(-size/4, -size/4)
+    path.lineTo(-size/4, size/4)
+    path.lineTo(size/4, 0f)
+    drawPath(path, paint)
+    restore()
+    paint.color = BACK_COLOR
+    for (j in 0..(lines - 1)) {
+        val sc : Float = sc1.divideScale(j, lines)
+        save()
+        rotate(90f * j)
+        drawLine(0f, 0f, 0f, -(size/10) * sc, paint)
+        restore()
+    }
+    restore()
+}
+
 class YBStepView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
