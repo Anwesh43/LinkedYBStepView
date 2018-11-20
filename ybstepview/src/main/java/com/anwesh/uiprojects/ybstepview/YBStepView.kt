@@ -22,3 +22,21 @@ val BACK_COLOR : Int = Color.parseColor("#BDBDBD")
 val SIZE_FACTOR : Int = 3
 val scDiv : Double = 0.51
 val scGap : Float = 0.05f
+
+class YBStepView(ctx : Context) : View(ctx) {
+
+    private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+    override fun onDraw(canvas : Canvas) {
+
+    }
+
+    override fun onTouchEvent(event : MotionEvent) : Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+        }
+        return true
+    }
+}
