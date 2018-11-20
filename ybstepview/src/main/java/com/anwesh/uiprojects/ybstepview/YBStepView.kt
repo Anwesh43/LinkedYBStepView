@@ -201,4 +201,25 @@ class YBStepView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : YBStepView, val animator : Animator = Animator(view)) {
+
+        private val ybs : YBStep = YBStep(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(BACK_COLOR)
+            ybs.draw(canvas, paint)
+            animator.animate {
+                ybs.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            ybs.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
